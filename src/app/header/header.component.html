@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <span>XYZ Clothing</span>
+  <span class="spacer"></span>
+  <mat-form-field appearance="outline">
+    <mat-select (selectionChange)="ratesChanged()" [(ngModel)] ="selectedRates">
+      <mat-option value="default">default</mat-option>
+      <mat-option *ngFor="let rate of exchangeRates" [value]="rate">{{rate.base}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-toolbar>

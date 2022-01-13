@@ -1,0 +1,23 @@
+[
+  {
+    "base": "AUD",
+    "rates": {
+      "USD": 0.72,
+      "CNY": 4.87
+    }
+  },
+  {
+    "base": "USD",
+    "rates": {
+      "AUD": 1.39,
+      "CNY": 6.77
+    }
+  },
+  {
+    "base": "CNY",
+    "rates": {
+      "AUD": 0.21,
+      "USD": 0.15
+    }
+  }
+]

@@ -1,0 +1,12 @@
+.rs-form{
+   width: 80%;
+   margin: auto;
+}
+
+.mat-form-field {
+  width: 70% !important;
+}
+
+.example-chip-list {
+  width: 100%;
+}

@@ -1,0 +1,101 @@
+
+
+
+
+
+
+<div class="container" fxLayout="row" fxLayoutAlign="center start" *ngIf="!isLoading">
+  <a
+  title="back"
+  [routerLink]="['/summary']">
+  Back to summary
+ </a>
+<form [formGroup]="productForm" class="rs-form" (ngSubmit)="saveProduct()">
+  <div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Product ID</mat-label>
+      <input matInput formControlName="productId" placeholder="ID">
+
+      <mat-error *ngIf="productForm.controls.productId.hasError('required')">
+        ID is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="productForm.controls.productId.hasError('unique')">
+        ID must be <strong>unique</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="productName" placeholder="Name">
+      <mat-error *ngIf="productForm.controls.productName.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="productForm.controls.productName.hasError('minlength')">
+        Name must be <strong>3 characters</strong> long
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Description"></textarea>
+      <mat-hint>Description is required</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="amount"  type="number" min="1" step="any" placeholder="Price">
+      <mat-hint>Price is required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field appearance="outline" >
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="base">
+        <mat-option *ngFor="let rate of baseCurrencyValues" [value]="rate">{{rate}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field class="example-chip-list" appearance="outline">
+    <mat-label>Related Products</mat-label>
+    <mat-chip-list #chipList aria-label="Product selection">
+      <mat-chip
+        *ngFor="let product of relatedProduct"
+        (removed)="remove(product)">
+        {{product.name}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        #relatedProductInput
+        placeholder="Related Product...."
+        formControlName="relatedProds"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let product of products" [disabled]="relatedProductCheck(product)" [value]="product.id">
+        {{product.name}}, id: {{product.id}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="submit"></label>
+    <div class="col-md-8">
+      <button id="submit" mat-raised-button name="submit" [disabled]="!productForm.valid" color="primary" class="btn">Save</button>
+    </div>
+  </div>
+</form>
+</div>
+<app-related-product-summary [events]="eventsSubject.asObservable()"></app-related-product-summary>
